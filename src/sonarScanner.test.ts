@@ -17,6 +17,7 @@ const projectName = 'Hello, World';
 const scm = 'git';
 const encoding = 'UTF-8';
 const qualityGate = 'false';
+const jsCoveragePath = '/coverage';
 
 const defaultFlags = [
   `-Dsonar.login=${token}`,
@@ -26,6 +27,7 @@ const defaultFlags = [
   `-Dsonar.scm.provider=${scm}`,
   `-Dsonar.sourceEncoding=${encoding}`,
   `-Dsonar.qualitygate.wait=${qualityGate}`,
+  `-Dsonar.javascript.lcov.reportPaths=${jsCoveragePath}`,
 ];
 
 describe('SonarQube Scanner Action', () => {
@@ -41,6 +43,7 @@ describe('SonarQube Scanner Action', () => {
     process.env['INPUT_ENABLEPULLREQUESTDECORATION'] = 'false';
     process.env['INPUT_ONLYCONFIG'] = 'false';
     process.env['INPUT_ISCOMMUNITYEDITION'] = 'false';
+    process.env['INPUT_JSCOVERAGEPATH'] = '/coverage';
   });
 
   it.each`

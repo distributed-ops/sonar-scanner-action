@@ -15,6 +15,7 @@ export const sonarScanner = async () => {
   const url = core.getInput('url', { required: true });
   const scmProvider = core.getInput('scmProvider', { required: true });
   const sourceEncoding = core.getInput('sourceEncoding', { required: false });
+  const jsCoveragePath = core.getInput('jsCoveragePath', { required: false });
   const enablePullRequestDecoration =
     core
       .getInput('enablePullRequestDecoration', { required: false })
@@ -56,6 +57,10 @@ export const sonarScanner = async () => {
     sonarParameters.push(`-Dsonar.qualitygate.timeout=${qualityGateTimeout}`)
   }
 
+  if (jsCoveragePath && jsCoveragePath.length > 0) {
+    sonarParameters.push(`-Dsonar.javascript.lcov.reportPaths=${jsCoveragePath}`);
+  }  
+
   core.info(`
     Using Configuration:
 
@@ -72,6 +77,7 @@ export const sonarScanner = async () => {
     runQualityGate              : ${runQualityGate}
     qualityGateTimeout          : ${qualityGateTimeout}
     organization                : ${organization}
+    jsCoveragePath              : ${jsCoveragePath}
   `);
 
   if (!isCommunityEdition) {
